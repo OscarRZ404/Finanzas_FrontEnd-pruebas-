@@ -1,0 +1,185 @@
+.container{
+    width: 100vw;
+
+    background-color: #fef7ff;
+}
+
+.main{
+    width: 95%;
+    height: 95%;
+
+    padding: 2.5%;
+    padding-left: 0px;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.menu{
+    flex: 0.1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.menu > button{
+    transition: transform 0.5s ease;
+}
+.menu > button:hover{
+    transform: scale(1.1);
+}
+
+.opciones{
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+}
+
+.opciones > div{
+    margin-bottom: calc(15px + .3vw + .3vh);
+    transition: transform 0.5s ease;
+}
+
+.opciones > div:hover{
+    transform: scale(1.1);
+}
+
+.opciones > div > div{
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+}
+
+.opciones > div > p{
+    margin: 5px;
+    font-size: calc(15px + 0.3vw);
+}
+
+.content{
+    flex: 0.9;
+
+    padding: 15px;
+
+    background-color: white;
+    border-radius: 25px;
+
+    padding-right: calc(1vw + 100px);
+
+    display: flex;
+    flex-direction: row;
+}
+.details{
+    flex: 0.45;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.plan{
+    flex: 0.55;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+  .content {
+    flex-direction: column;
+  }
+}
+@media (max-width: 768px) {
+  .details, .plan {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}
+
+.content > div > h2, h3, h4, h5{
+    margin: calc(5px + .1vw);
+}
+
+button{
+    background-color: #fef7ff00;
+    border: none;
+}
+
+h3{
+    font-size: calc(15px + 1vw);
+}
+h4{
+    font-size: calc(12px + .8vw);
+}
+h5{
+    font-size: calc(10px + 0.5vw)
+}
+
+.input-group {
+  width: 100%;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+
+.input-group label {
+  display: block;
+  margin-left: 5%;
+  margin-bottom: 0.3rem;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.input-group input{
+  width: 90%;
+  margin-left: 5%;
+  padding: 0.6rem 1rem;
+  box-sizing: border-box;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.input-group input::placeholder {
+  color: #888;
+  font-style: Maven Pro;
+  font-size: 0.95rem;
+  opacity: 1;
+}
+
+.login-button {
+  width: 90%;
+  margin-left: 5%;
+  padding: 0.7rem;
+  background-color: #2C2C2C;
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+}
+
+.login-button:hover {
+  background-color: #3e3f3f;
+}
+
+.forgot-password,
+.register-link {
+  width: 90%;
+  margin-left: 5%;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .login-wrapper {
+    flex-direction: column;
+  }
+
+  .login-left {
+    display: none;
+  }
+
+  .login-right {
+    flex: none;
+    height: 100vh;
+  }
+}

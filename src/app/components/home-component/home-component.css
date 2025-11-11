@@ -1,0 +1,134 @@
+.container{
+    width: 100vw;
+
+    background-color: #fef7ff;
+}
+
+.main{
+    width: 95%;
+    height: 95%;
+
+    padding: 2.5%;
+    padding-left: 0px;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.menu{
+    flex: 0.1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.menu > button{
+    transition: transform 0.5s ease;
+}
+.menu > button:hover{
+    transform: scale(1.1);
+}
+
+.opciones{
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+}
+
+.opciones > div{
+    margin-bottom: calc(15px + .3vw + .3vh);
+    transition: transform 0.5s ease;
+}
+
+.opciones > div:hover{
+    transform: scale(1.1);
+}
+
+.opciones > div > div{
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+}
+
+.opciones > div > p{
+    margin: 5px;
+    font-size: calc(15px + 0.3vw);
+}
+
+.content{
+    flex: 0.9;
+
+    padding: 15px;
+
+    background-color: white;
+    border-radius: 25px;
+
+    padding-right: calc(1vw + 100px);
+}
+
+.filters{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    margin-bottom: calc(15px + .2vw + .2vh);
+}
+
+.filter{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: calc(10px + .1vw);
+    border-color: black;
+    border-width: 1px;
+    border-radius: 10px;
+    border-style: solid;
+
+    padding-top: 2.5px;
+    padding-bottom: 2.5px;
+    padding-left: 3px;
+    padding-right: 3px;
+
+    transition: transform 0.5s ease;
+}
+.filter:hover{
+    transform: scale(1.1);
+}
+
+.filter > button{
+    font-size: calc(15px + 0.3vw);
+}
+
+.list{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    justify-content: space-evenly;
+}
+
+.propiedad{
+    width: calc(280px + .5vw);
+    aspect-ratio: 1/1.5;
+    transition: transform 0.5s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin: 25px;
+}
+.propiedad:hover{
+    transform: scale(1.1);
+}
+
+.propiedad > div > p{
+    display: inline-block;
+    margin: 5px;
+}
+
+button{
+    background-color: #fef7ff00;
+    border: none;
+}

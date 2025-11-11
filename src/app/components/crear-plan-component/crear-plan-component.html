@@ -1,0 +1,98 @@
+<div class="container">
+    <div class="main">
+        <div class="menu">
+            <button (click)="desplegarMenu()">
+                <mat-icon>menu</mat-icon>
+            </button>
+            <br>
+            <div *ngIf="menuDesplegado == true" class="opciones">
+                <div class="vivienda" (click)='cambiarVista("Viviendas")'>
+                    <div>
+                        <mat-icon>star</mat-icon>
+                    </div>
+                    <p>Viviendas</p>
+                </div>
+                <div class="planes" (click)='cambiarVista("Planes")'>
+                    <div>
+                        <mat-icon>star</mat-icon>
+                    </div>
+                    <p>Planes</p>
+                </div>
+                <div class="cuenta" (click)='cambiarVista("Cuenta")'>
+                    <div>
+                        <mat-icon>star</mat-icon>
+                    </div>
+                    <p>Cuenta</p>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="propiedad !== undefined" class="content">
+            <div class="details">
+                <h1>Detalles de Vivienda</h1>
+                <br>
+                <img src="imagenes/propiedades/{{propiedad.nombre}}.png" style="width: 65%; min-width: 200px;">
+                <h1>Costo: S/{{propiedad.valor_vivienda}}</h1>
+                <h3>BPP: S/</h3>
+                <h4>Detalles BPP:</h4>
+                <h5>Rango de Costo:</h5>
+                <h5>Tipo de Vivienda:</h5>
+                <h4>Plazo Disponible:</h4>
+                <h5>Rango - Meses</h5>
+                <h3>Detalles de Vivienda</h3>
+                <h4>Distrito: {{propiedad.distrito}}</h4>
+                <h4>Dirección: {{propiedad.direccion}}</h4>
+            </div>
+            <div class="plan">
+                <h1>Términos Financieros</h1>
+                <form [formGroup]="planForm" (ngSubmit)="crearPlan()">
+                    <mat-form-field appearance="fill" id="tipoTasa" class="input-group">
+                        <label for="banco">Banco</label>
+                        <br>
+                        <mat-select formControlName="banco">
+                        @for (banco of bancos; track banco) {
+                            <mat-option class="selectInput" [ngStyle]="{'background-color': 'white'}" [value]="banco">
+                            {{ banco }}
+                            </mat-option>
+                        }
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" id="tipoTasa" class="input-group">
+                        <label for="tipoTasa">Tipo de Tasa</label>
+                        <br>
+                        <mat-select formControlName="tipoTasa" (selectionChange)="cambiarTipoTasa($event.value)">
+                        @for (tipoInteres of tiposInteres; track tipoInteres) {
+                            <mat-option class="selectInput" [ngStyle]="{'background-color': 'white'}" [value]="tipoInteres">
+                            {{ tipoInteres }}
+                            </mat-option>
+                        }
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" id="capitalizacion" class="input-group"
+                    [style.visibility]="tipoTasaElegida === 'Nominal' ? 'visible' : 'hidden'"
+                    [style.height]="tipoTasaElegida === 'Nominal' ? 'auto' : '0px'">
+                    <label for="capitalizacion">Capitalización</label>
+                    <br>
+                    <mat-select formControlName="capitalizacion">
+                        @for (cap of capitalizaciones; track cap) {
+                        <mat-option class="selectInput" [ngStyle]="{ 'background-color': 'white' }" [value]="cap">
+                            {{ cap }}
+                        </mat-option>
+                        }
+                    </mat-select>
+                    </mat-form-field>
+
+                    <div class="input-group">
+                        <label for="intereses">Intereses (%)</label>
+                        <input type="number" id="intereses" formControlName="porcentajeTasa" step=".01" min="0" required>
+                    </div>
+
+                    <div *ngIf="errorMessage" class="error-message">
+                        Usuario o contraseña incorrectos. Inténtalo nuevamente.
+                    </div>
+
+                    <button (click)="crearPlan()" type="submit" class="login-button">Crear Plan</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

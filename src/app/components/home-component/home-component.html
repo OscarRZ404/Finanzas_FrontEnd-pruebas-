@@ -1,0 +1,112 @@
+<div class="container">
+    <div class="main">
+        <div class="menu">
+            <button (click)="desplegarMenu()">
+                <mat-icon>menu</mat-icon>
+            </button>
+            <br>
+            <div *ngIf="menuDesplegado == true" class="opciones">
+                <div class="vivienda" (click)='cambiarVista("Viviendas")'>
+                    <div>
+                        <mat-icon *ngIf='vistaActual == "Viviendas"'>stars</mat-icon>
+                        <mat-icon *ngIf='vistaActual != "Viviendas"'>star</mat-icon>
+                    </div>
+                    <p>Viviendas</p>
+                </div>
+                <div class="planes" (click)='cambiarVista("Planes")'>
+                    <div>
+                        <mat-icon *ngIf='vistaActual == "Planes"'>stars</mat-icon>
+                        <mat-icon *ngIf='vistaActual != "Planes"'>star</mat-icon>
+                    </div>
+                    <p>Planes</p>
+                </div>
+                <div class="cuenta" (click)='cambiarVista("Cuenta")'>
+                    <div>
+                        <mat-icon *ngIf='vistaActual == "Cuenta"'>stars</mat-icon>
+                        <mat-icon *ngIf='vistaActual != "Cuenta"'>star</mat-icon>
+                    </div>
+                    <p>Cuenta</p>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="top">
+                <button><mat-icon>chevron_left</mat-icon></button>
+            </div>
+            <h1>Mivivienda App</h1>
+            <div *ngIf='vistaActual == "Viviendas"' class="ViviendasDiv">
+                <div class="filters">
+                    <div class="filter">
+                        <mat-icon *ngIf='filtroActual == "Precio"'>check</mat-icon>
+                        <button (click)='cambiarFiltro("Precio")'>Precio</button>
+                    </div>
+                    <div class="filter">
+                        <mat-icon *ngIf='filtroActual == "Ciudad"'>check</mat-icon>
+                        <button (click)='cambiarFiltro("Ciudad")'>Ciudad</button>
+                    </div>
+                    <div class="filter">
+                        <mat-icon *ngIf='filtroActual == "Distrito"'>check</mat-icon>
+                        <button (click)='cambiarFiltro("Distrito")'>Distrito</button>
+                    </div>
+                    <div class="filter">
+                        <mat-icon *ngIf='filtroActual == "Area"'>check</mat-icon>
+                        <button (click)='cambiarFiltro("Area")'>Area</button>
+                    </div>
+                    <div class="filter">
+                        <mat-icon *ngIf='filtroActual == "Habitaciones"'>check</mat-icon>
+                        <button (click)='cambiarFiltro("Habitaciones")'>Habitaciones</button>
+                    </div>
+                    <div class="filter">
+                        <mat-icon *ngIf='filtroActual == "Favoritos"'>check</mat-icon>
+                        <button (click)='cambiarFiltro("Favoritos")'>Favoritos</button>
+                    </div>
+                </div>
+                <h1 style="text-align: center;">Viviendas</h1>
+                <div class="list">
+                    <div *ngFor="let propiedad of propiedades" class="propiedad" (click)="crearPlan(propiedad.propiedad_id)">
+                        <img src="imagenes/propiedades/{{propiedad.nombre}}.png" style="width: 100%;">
+                        <br>
+                        <p style="margin: 2px; font-weight: bold; font-size: calc(15px + 0.3vw);">{{propiedad.nombre}} - S/{{propiedad.valor_vivienda}}</p>
+                        <br>
+                        <div>
+                            <p *ngIf="propiedad.bbp == true">Aplica BBP -</p>
+                            <p *ngIf="propiedad.periodo_gracia == true">Periodo de gracia</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf='vistaActual == "Planes"'>
+                <div class="filters">
+                    <div class="filter">
+                        <mat-icon *ngIf='filtroActual == "Precio"'>check</mat-icon>
+                        <button (click)='cambiarFiltro("Precio")'>Precio</button>
+                    </div>
+                    <div class="filter">
+                        <mat-icon *ngIf='filtroActual == "Ciudad"'>check</mat-icon>
+                        <button (click)='cambiarFiltro("Ciudad")'>Ciudad</button>
+                    </div>
+                    <div class="filter">
+                        <mat-icon *ngIf='filtroActual == "Distrito"'>check</mat-icon>
+                        <button (click)='cambiarFiltro("Distrito")'>Distrito</button>
+                    </div>
+                    <div class="filter">
+                        <mat-icon *ngIf='filtroActual == "Area"'>check</mat-icon>
+                        <button (click)='cambiarFiltro("Area")'>Area</button>
+                    </div>
+                    <div class="filter">
+                        <mat-icon *ngIf='filtroActual == "Habitaciones"'>check</mat-icon>
+                        <button (click)='cambiarFiltro("Habitaciones")'>Habitaciones</button>
+                    </div>
+                    <div class="filter">
+                        <mat-icon *ngIf='filtroActual == "Favoritos"'>check</mat-icon>
+                        <button (click)='cambiarFiltro("Favoritos")'>Favoritos</button>
+                    </div>
+                </div>
+                <h1 style="text-align: center;">Planes</h1>
+            </div>
+            <div *ngIf='vistaActual == "Cuenta"'>
+                <h1 style="text-align: center;">Cuenta</h1>
+            </div>
+        </div>
+    </div>
+</div>
