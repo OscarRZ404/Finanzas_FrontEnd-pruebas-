@@ -120,7 +120,6 @@ h5{
   text-align: left;
 }
 
-
 .input-group label {
   display: block;
   margin-left: 5%;
@@ -167,6 +166,11 @@ h5{
   margin-left: 5%;
   font-size: 0.9rem;
   text-align: center;
+}
+
+.formSectionTitle{
+  text-align: center;
+  font-size: calc(20px + 0.5vw);
 }
 
 @media (max-width: 768px) {

@@ -103,6 +103,14 @@
                     </div>
                 </div>
                 <h1 style="text-align: center;">Planes</h1>
+                <div class="list">
+                    <div *ngFor="let plan of planes" class="propiedad" (click)="mostrarPlan(plan.plan_id)">
+                        <img src="imagenes/propiedades/{{getVivienda(plan.propiedad_id)}}.png" style="width: 100%;">
+                        <br>
+                        <p style="margin: 2px; font-weight: bold; font-size: calc(15px + 0.3vw);">{{getVivienda(plan.propiedad_id)}}</p>
+                        <br>
+                    </div>
+                </div>
             </div>
             <div *ngIf='vistaActual == "Cuenta"'>
                 <h1 style="text-align: center;">Cuenta</h1>

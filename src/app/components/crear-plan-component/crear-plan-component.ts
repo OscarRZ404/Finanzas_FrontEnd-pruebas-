@@ -36,6 +36,7 @@ export class CrearPlanComponent {
   }
 
   ngOnInit(){
+    this.crearForm();
     this.cargarPropiedad();
     this.cdr.detectChanges();
   }
@@ -44,8 +45,12 @@ export class CrearPlanComponent {
     this.planForm = this.fb.group({
       tipoTasa: ['', Validators.required],
       porcentajeTasa: ['', Validators.required],
+      plazoTasa: ['', Validators.required],
+      capitalizacion: ['', Validators.required],
       plazo: ['', Validators.required],
       fechaInicio: ['', Validators.required],
+      cuotaInicial: ['', Validators.required],
+      banco: ['', Validators.required]
     });
   }
 
@@ -54,7 +59,7 @@ export class CrearPlanComponent {
       const id = params.get('id');
       if(id !== null){
         this.propiedadId = parseInt(id, 10);
-        this.propiedad = this.propiedadService.getPropiedadById(this.propiedadId)[0];
+        this.propiedad = this.propiedadService.getPropiedadById(this.propiedadId);
         this.cdr.detectChanges();
       }
     })

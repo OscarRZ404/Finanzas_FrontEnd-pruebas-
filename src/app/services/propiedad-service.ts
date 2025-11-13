@@ -57,6 +57,6 @@ export class PropiedadService {
   }
 
   getPropiedadById(id: number){
-    return this.propiedades.filter(p => p.propiedad_id == id);
+    return this.propiedades.find(p => p.propiedad_id == id);
   }
 }
