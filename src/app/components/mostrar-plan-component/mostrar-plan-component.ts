@@ -21,7 +21,7 @@ export class MostrarPlanComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
 
-  displayedColumns: string[] = ['nCuota', 'TEM', 'saldoInicial', 'interes', 'cuota', 'amortizacion', 'saldoFinal'];
+  displayedColumns: string[] = ['nCuota', 'TEM', 'saldoInicial', 'interes', 'cuota', 'amortizacion', 'riesgo', 'desgravamen', 'saldoFinal'];
 
   menuDesplegado: boolean = true;
 

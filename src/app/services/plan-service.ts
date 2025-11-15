@@ -58,8 +58,7 @@ export class PlanService {
       let ninteres = nsaldoInicial * ntem;
       let ncuota = nsaldoInicial * (ntem + nDesgravamen) / (1 - (1 + ntem + nDesgravamen)**-(nCuotas - i));
       let namortizacion = ncuota - ninteres - (nDesgravamen * nsaldoInicial);
-      nseguroRiesgo = nseguroRiesgo * plan.precioPropiedad / (nCuotas);
-      let nflujo = ncuota + nseguroRiesgo + ncomisionPeriodica + nportes + ngastosAdministracion;
+      let nflujo = ncuota + (nseguroRiesgo * plan.precioPropiedad / (nCuotas)) + ncomisionPeriodica + nportes + ngastosAdministracion;
       let nsaldoFinal = nsaldoInicial - namortizacion;
 
       let nuevaCuota: Cuota = {
@@ -75,8 +74,8 @@ export class PlanService {
         interes: Number(ninteres.toFixed(2)),
         cuota: Number(ncuota.toFixed(2)),
         amortizacion: Number(namortizacion.toFixed(2)),
-        seguroDesgravamen: nDesgravamen,
-        seguroRiesgo: nseguroRiesgo,
+        seguroDesgravamen: (nDesgravamen * plan.precioPropiedad / (nCuotas)),
+        seguroRiesgo: (nseguroRiesgo * plan.precioPropiedad / (nCuotas)),
         comision: ncomisionPeriodica,
         portes: nportes,
         gastosAdministrativos: ngastosAdministracion,

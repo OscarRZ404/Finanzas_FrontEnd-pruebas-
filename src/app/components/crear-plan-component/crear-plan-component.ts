@@ -44,13 +44,28 @@ export class CrearPlanComponent {
   crearForm(){
     this.planForm = this.fb.group({
       tipoTasa: ['', Validators.required],
-      porcentajeTasa: ['', Validators.required],
+      porcentajeTasa: [0, Validators.required],
       plazoTasa: ['', Validators.required],
       capitalizacion: ['', Validators.required],
-      plazo: ['', Validators.required],
+      plazo: [10, Validators.required],
       fechaInicio: ['', Validators.required],
-      cuotaInicial: ['', Validators.required],
-      banco: ['', Validators.required]
+      cuotaInicial: [20, Validators.required],
+      banco: ['', Validators.required],
+
+      notarial: [0, Validators.required],
+      registral: [0, Validators.required],
+      tasacion: [0, Validators.required],
+      estudio: [0, Validators.required],
+      activacion: [0, Validators.required],
+
+      comisionPeriodica: [0, Validators.required],
+      portes: [0, Validators.required],
+      administracion: [0, Validators.required],
+      desgravamen: [0, Validators.required],
+      riesgo: [0, Validators.required],
+
+      graciaParcial: [0, Validators.required],
+      graciaTotal: [0, Validators.required]
     });
   }
 

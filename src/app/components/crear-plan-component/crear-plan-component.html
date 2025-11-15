@@ -110,7 +110,69 @@
 
                     <h1 class="formSectionTitle">Gastos Iniciales</h1>
 
+                    <div class="input-group">
+                        <label for="notarial">Costes Notariales</label>
+                        <input type="number" id="notarial" formControlName="notarial" step=".01" min="0" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="registral">Costes Registrales</label>
+                        <input type="number" id="registral" formControlName="registral" step=".01" min="0" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="tasacion">Tasacion</label>
+                        <input type="number" id="tasacion" formControlName="tasacion" step=".01" min="0" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="estudio">Comisión de Estudio</label>
+                        <input type="number" id="estudio" formControlName="estudio" step=".01" min="0" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="activacion">Comisión de Activación</label>
+                        <input type="number" id="activacion" formControlName="activacion" step=".01" min="0" required>
+                    </div>
+
                     <h1 class="formSectionTitle">Gastos Periódicos</h1>
+
+                    <div class="input-group">
+                        <label for="comisionPeriodica">Comisión Periódica</label>
+                        <input type="number" id="comisionPeriodica" formControlName="comisionPeriodica" step=".01" min="0" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="portes">Portes</label>
+                        <input type="number" id="portes" formControlName="portes" step=".01" min="0" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="administracion">Gastos de Administración</label>
+                        <input type="number" id="administracion" formControlName="administracion" step=".01" min="0" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="desgravamen">Seguro Desgravamen (%)</label>
+                        <input type="number" id="desgravamen" formControlName="desgravamen" step=".01" min="0" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="riesgo">Seguro de Riesgo</label>
+                        <input type="number" id="riesgo" formControlName="riesgo" step=".01" min="0" required>
+                    </div>
+
+                    <h1 class="formSectionTitle">Periodos de Gracia</h1>
+
+                    <div class="input-group">
+                        <label for="graciaTotal">Gracia Total (Meses)</label>
+                        <input type="number" id="graciaTotal" formControlName="graciaTotal" step="1" min="0" max="6" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="graciaParcial">Gracia Parcial (Meses)</label>
+                        <input type="number" id="graciaParcial" formControlName="graciaParcial" step="1" min="0" max="6" required>
+                    </div>
 
                     <button (click)="crearPlan()" type="submit" class="login-button">Crear Plan</button>
                 </form>

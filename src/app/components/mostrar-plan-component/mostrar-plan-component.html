@@ -27,6 +27,7 @@
             </div>
         </div>
         <div class="content">
+            <h1>Plan de Pago</h1>
             <div>
                 <table mat-table [dataSource]="dataSource" class="table">
                     <ng-container matColumnDef="nCuota">
@@ -59,6 +60,16 @@
                         <td mat-cell *matCellDef="let cuota" class="column"> {{cuota.amortizacion | number:'1.2-2'}} </td>
                     </ng-container>
 
+                    <ng-container matColumnDef="riesgo">
+                        <th mat-header-cell *matHeaderCellDef class="columnName"> Seguro de Riesgo </th>
+                        <td mat-cell *matCellDef="let cuota" class="column"> {{cuota.seguroRiesgo | number:'1.2-3'}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="desgravamen">
+                        <th mat-header-cell *matHeaderCellDef class="columnName"> Seguro Desgravamen </th>
+                        <td mat-cell *matCellDef="let cuota" class="column"> {{cuota.seguroDesgravamen | number:'1.2-3'}} </td>
+                    </ng-container>
+
                     <ng-container matColumnDef="saldoFinal">
                         <th mat-header-cell *matHeaderCellDef class="columnName"> Saldo Final </th>
                         <td mat-cell *matCellDef="let cuota" class="column"> {{cuota.saldoFinal | number:'1.2-2'}} </td>
@@ -69,7 +80,8 @@
             </table>
             <mat-paginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons aria-label="q"></mat-paginator>
             </div>
-            
+            <h1>Indicadores Financieros</h1>
+            <h3>VAN: , TIR: , TCEA: , Tasa de Descuento: </h3>
         </div>
     </div>
 </div>
