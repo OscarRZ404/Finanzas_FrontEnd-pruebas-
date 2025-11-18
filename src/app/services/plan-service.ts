@@ -15,9 +15,13 @@ export class PlanService {
       banco: "BCP",
       tipoTasa: "Efectiva",
       plazoTasa: "Anual",
+      capitalizacion: "Anual",
       tasaInteres: 0.11,
       precioPropiedad: 350000,
-      cuotaInicial: 70000,
+      cuotaInicial: 20,
+
+      graciaTotal: 2,
+      graciaParcial: 2,
 
       plazoPrestamo: 4,
 
@@ -37,6 +41,54 @@ export class PlanService {
     }
   ]
 
+  convertirTasa(tasa: number, tipo: string, plazo: string, capitalizacion: string){
+    let tasaEfectiva = 0;
+    //Extraer Datos
+    let diasCapitalizacion = 0;
+    let diasPlazoCuota = 0;
+    switch(plazo){
+      case "Anual":
+        diasPlazoCuota = 360;
+      break;
+      case "Semestral":
+        diasPlazoCuota = 180;
+      break;
+      case "Trimestral":
+        diasPlazoCuota = 90;
+      break;
+      case "Mensual":
+        diasPlazoCuota = 30;
+      break;
+    }
+    switch(capitalizacion){
+      case "Anual":
+        diasCapitalizacion = 360;
+      break;
+      case "Semestral":
+        diasCapitalizacion = 180;
+      break;
+      case "Trimestral":
+        diasCapitalizacion = 90;
+      break;
+      case "Mensual":
+        diasCapitalizacion = 30;
+      break;
+      case "Diaria":
+        diasCapitalizacion = 1;
+      break;
+    }
+    //Si es tasa nominal, se convierte a efectiva
+    if(tipo == "Nominal"){
+      tasaEfectiva = ((1 + (tasa/(diasPlazoCuota/diasCapitalizacion)))**(diasPlazoCuota/diasCapitalizacion)) - 1;
+    }else{
+      tasaEfectiva = tasa;
+    }
+    //Pasar Tasa Efectiva de cualquier periodo a TEM
+    tasaEfectiva = ((1 + tasaEfectiva)**(30/diasPlazoCuota)) - 1;
+
+    return tasaEfectiva;
+  }
+
   crearCuotas(plan: Plan){
     let listaCuotas = [];
 
@@ -44,22 +96,38 @@ export class PlanService {
 
     let npropiedad_id = plan.propiedad_id;
     let nusuario_id = plan.usuario_id;
-    let ntem = ((1 + plan.tasaInteres)**(30/360)) - 1;
+    let ntem = this.convertirTasa(plan.tasaInteres, plan.tipoTasa, plan.plazoTasa, plan.capitalizacion)
     let nDesgravamen = plan.seguroDesgravamen;
     let nseguroRiesgo = plan.seguroRiesgo;
     let ncomisionPeriodica = plan.comisionPeriodica;
     let nportes = plan.portes;
     let ngastosAdministracion = plan.gastosAdministracion;
-    let nsaldoInicial = (plan.precioPropiedad - plan.cuotaInicial) + (plan.costoNotarial + plan.costoRegistal + plan.tasacion + plan.comisionDeEstudio + plan.comisionPorActivacion);
+    let nsaldoInicial = (plan.precioPropiedad - (plan.cuotaInicial * plan.precioPropiedad / 100)) + (plan.costoNotarial + plan.costoRegistal + plan.tasacion + plan.comisionDeEstudio + plan.comisionPorActivacion);
+
     for(let i = 0; i < nCuotas; i++){
       let ncuota_id = i + 1;
       let nnCuota = i + 1;
       let ntasaInteres = plan.tasaInteres;
       let ninteres = nsaldoInicial * ntem;
-      let ncuota = nsaldoInicial * (ntem + nDesgravamen) / (1 - (1 + ntem + nDesgravamen)**-(nCuotas - i));
-      let namortizacion = ncuota - ninteres - (nDesgravamen * nsaldoInicial);
+
+      let ncuota = 0;
+      let namortizacion = 0;
+      let nsaldoFinal = 0;
+      if(i < plan.graciaTotal){
+        ncuota = 0;
+        namortizacion = 0;
+        nsaldoFinal = nsaldoInicial + ninteres;
+      }else if(i < plan.graciaParcial + plan.graciaTotal){
+        ncuota = ninteres;
+        namortizacion = 0;
+        nsaldoFinal = nsaldoInicial - namortizacion;
+      }else{
+        ncuota = nsaldoInicial * (ntem + nDesgravamen) / (1 - (1 + ntem + nDesgravamen)**-(nCuotas - i));
+        namortizacion = ncuota - ninteres - (nDesgravamen * nsaldoInicial);
+
+        nsaldoFinal = nsaldoInicial - namortizacion;
+      }
       let nflujo = ncuota + (nseguroRiesgo * plan.precioPropiedad / (nCuotas)) + ncomisionPeriodica + nportes + ngastosAdministracion;
-      let nsaldoFinal = nsaldoInicial - namortizacion;
 
       let nuevaCuota: Cuota = {
         cuota_id: ncuota_id,
@@ -74,7 +142,7 @@ export class PlanService {
         interes: Number(ninteres.toFixed(2)),
         cuota: Number(ncuota.toFixed(2)),
         amortizacion: Number(namortizacion.toFixed(2)),
-        seguroDesgravamen: (nDesgravamen * plan.precioPropiedad / (nCuotas)),
+        seguroDesgravamen: (nDesgravamen * nsaldoInicial),
         seguroRiesgo: (nseguroRiesgo * plan.precioPropiedad / (nCuotas)),
         comision: ncomisionPeriodica,
         portes: nportes,
