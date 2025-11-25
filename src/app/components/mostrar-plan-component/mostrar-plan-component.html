@@ -28,6 +28,7 @@
         </div>
         <div class="content">
             <h1>Plan de Pago</h1>
+            <p style="text-align: center;">Las cuotas incluyen el seguro Desgravamen, según</p>
             <div>
                 <table mat-table [dataSource]="dataSource" class="table">
                     <ng-container matColumnDef="nCuota">
@@ -78,7 +79,7 @@
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
-            <mat-paginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons aria-label="q"></mat-paginator>
+            <mat-paginator [pageSizeOptions]="[10, 20, 30, 50]" showFirstLastButtons aria-label="q"></mat-paginator>
             </div>
             <h1>Indicadores Financieros</h1>
             <h3>VAN: , TIR: , TCEA: , Tasa de Descuento: </h3>

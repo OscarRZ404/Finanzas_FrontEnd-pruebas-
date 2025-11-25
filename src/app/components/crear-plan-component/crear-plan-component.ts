@@ -5,6 +5,10 @@ import { PropiedadService } from '../../services/propiedad-service';
 import { HomeService } from '../../services/home-service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { InteresesService } from '../../services/intereses-service';
+import { Plan } from '../../models/plan-pago';
+import { UsuarioService } from '../../services/usuario-service';
+import { PlanService } from '../../services/plan-service';
+import { Usuario } from '../../models/usuario';
 
 @Component({
   selector: 'app-crear-plan-component',
@@ -16,41 +20,43 @@ export class CrearPlanComponent {
   propiedadId: number = 0;
   propiedad: Propiedad | undefined;
 
+  usuario: Usuario | undefined;
+
   menuDesplegado: boolean = true;
 
   planForm!: FormGroup;
   errorMessage: boolean = false;
 
-  tiposInteres: Array<string>;
-  bancos: Array<string>;
-  periodosInteres: Array<string>;
-  capitalizaciones: Array<string>;
+  tiposInteres: string[];
+  bancos: string[];
+  periodosInteres: string[];
+  capitalizaciones: string[];
 
   tipoTasaElegida: string = "";
 
-  constructor(private route: ActivatedRoute, private cdr: ChangeDetectorRef, private propiedadService: PropiedadService, private homeService: HomeService, private router: Router, private fb: FormBuilder, private interesesService: InteresesService){
+  constructor(private route: ActivatedRoute, private cdr: ChangeDetectorRef, private propiedadService: PropiedadService, private homeService: HomeService, private router: Router, private fb: FormBuilder, private interesesService: InteresesService, private usuarioService: UsuarioService, private planService: PlanService){
     this.tiposInteres = interesesService.getTipoTasas();
     this.bancos = interesesService.getBancos();
     this.periodosInteres = interesesService.getPeriodos();
     this.capitalizaciones = interesesService.getCapitalizaciones();
   }
 
-  ngOnInit(){
+  ngOnInit(): void {
     this.crearForm();
     this.cargarPropiedad();
-    this.cdr.detectChanges();
+    this.cargarUsuario();
   }
 
-  crearForm(){
+  crearForm(): void {
     this.planForm = this.fb.group({
-      tipoTasa: ['', Validators.required],
-      porcentajeTasa: [0, Validators.required],
-      plazoTasa: ['', Validators.required],
-      capitalizacion: ['', Validators.required],
-      plazo: [10, Validators.required],
-      fechaInicio: ['', Validators.required],
-      cuotaInicial: [20, Validators.required],
-      banco: ['', Validators.required],
+      tipoTasa: ['Efectiva', Validators.required],
+      porcentajeTasa: [4, [Validators.min(7.5), Validators.max(30)]],
+      plazoTasa: ['Anual', Validators.required],
+      capitalizacion: ['Diaria', Validators.required],
+      plazo: [5, [Validators.min(5), Validators.min(25)]],
+      fechaInicio: [Date, Validators.required],
+      cuotaInicial: [7.5, [Validators.min(7.5), Validators.max(30)]],
+      banco: ['BCP', Validators.required],
 
       notarial: [0, Validators.required],
       registral: [0, Validators.required],
@@ -61,39 +67,121 @@ export class CrearPlanComponent {
       comisionPeriodica: [0, Validators.required],
       portes: [0, Validators.required],
       administracion: [0, Validators.required],
-      desgravamen: [0, Validators.required],
-      riesgo: [0, Validators.required],
+      desgravamen: [0.05, [Validators.min(0.05), Validators.max(0.15)]],
+      riesgo: [0.02, [Validators.min(0.02), Validators.max(0.10)]],
 
-      graciaParcial: [0, Validators.required],
-      graciaTotal: [0, Validators.required]
+      graciaParcial: [0, Validators.max(6)],
+      graciaTotal: [0, Validators.max(6)]
     });
   }
 
-  cargarPropiedad(){
-    this.route.paramMap.subscribe(params =>{
+  cargarPropiedad(): void {
+    this.route.paramMap.subscribe(params => {
       const id = params.get('id');
-      if(id !== null){
+      if (id !== null) {
         this.propiedadId = parseInt(id, 10);
-        this.propiedad = this.propiedadService.getPropiedadById(this.propiedadId);
-        this.cdr.detectChanges();
+        this.propiedadService.getPropiedadById(this.propiedadId).subscribe({
+          next: (propiedad) => {
+            this.propiedad = propiedad;
+            this.cdr.detectChanges();
+          },
+          error: (err) => {
+            console.error("Error pe", err);
+          }
+        });
       }
-    })
+    });
   }
 
-  desplegarMenu(){
-    this.menuDesplegado = !this.menuDesplegado
+  cargarUsuario(): void{
+    const usuarioId = this.usuarioService.getUsuarioId();
+    if(usuarioId !== null){
+      this.usuarioService.getUsuarioById(usuarioId).subscribe({
+        next: (usuarioBD) => {
+          this.usuario = usuarioBD;
+          this.cdr.detectChanges();
+        },
+        error: (err) => {
+          console.error("Error al al obtener el usuario gg", err)
+        }
+      })
+    }
   }
 
-  cambiarVista(vista: string){
+  desplegarMenu(): void {
+    this.menuDesplegado = !this.menuDesplegado;
+  }
+
+  cambiarVista(vista: string): void {
     this.homeService.cambiarVista(vista);
     this.router.navigate(['/home']);
   }
 
-  cambiarTipoTasa(tipo: string){
+  cambiarTipoTasa(tipo: string): void {
     this.tipoTasaElegida = tipo;
   }
 
   crearPlan(){
+    //if(this.planForm.invalid){
+      //alert("Por favor, complete todos los campos requeridos");
+      //return;
+    //}
+    alert(this.planForm.get('fechaInicio')?.valid);
+    const formValues = this.planForm.value;
+    const usuarioId = this.usuarioService.getUsuarioId();
+    if(this.propiedad !== undefined && usuarioId !== null){
+      const plan: Plan = {
+        id: 0,
+        propiedad_id: this.propiedad.propiedad_id,
+        nombrePropiedad: this.propiedad.nombre,
+        usuario_id: usuarioId,
+        tipoTasa: formValues.tipoTasa,
+        tasaInteres: formValues.porcentajeTasa,
+        plazoTasa: formValues.plazoTasa,
+        capitalizacion: formValues.capitalizacion,
+        plazoPrestamo: formValues.plazo,
+        cuotaInicial: formValues.cuotaInicial,
+        banco: formValues.banco,
 
+        costoNotarial: formValues.notarial,
+        costoRegistral: formValues.registral,
+        tasacion: formValues.tasacion,
+        comisionDeEstudio: formValues.estudio,
+        comisionPorActivacion: formValues.activacion,
+
+        comisionPeriodica: formValues.comisionPeriodica,
+        portes: formValues.portes,
+        gastosAdministracion: formValues.administracion,
+        seguroDesgravamen: formValues.desgravamen,
+        seguroRiesgo: formValues.riesgo,
+
+        graciaParcial: formValues.graciaParcial,
+        graciaTotal: formValues.graciaTotal,
+
+        precioPropiedad: this.propiedad.valor_vivienda, 
+        cok: 0.27,
+        activo: true,
+        moneda: 'Soles',
+
+        bbp: true
+      };
+      this.planService.crearPlan(usuarioId, this.propiedad.propiedad_id, plan).subscribe({
+        next: (response) => {
+          window.alert('Plan creado con éxito');
+          this.router.navigate(['/planes']);
+        },
+        error: (err) => {
+          console.error('Error al crear plan:', err);
+        }
+      });
+    }
+  }
+
+  getRangoPrecio(precioPropiedad: number){
+    return this.planService.getRangoPrecio(precioPropiedad)
+  }
+
+  getBBP(usuario: Usuario, propiedad: Propiedad){
+    return this.planService.calcularBBP(propiedad.valor_vivienda, propiedad.tipo, usuario.edad, usuario.salario, usuario.discapacidad, usuario.desplazado, usuario.migrante);
   }
 }

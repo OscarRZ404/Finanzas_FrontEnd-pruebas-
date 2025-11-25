@@ -67,11 +67,8 @@
                         <img src="imagenes/propiedades/{{propiedad.nombre}}.png" style="width: 100%;">
                         <br>
                         <p style="margin: 2px; font-weight: bold; font-size: calc(15px + 0.3vw);">{{propiedad.nombre}} - S/{{propiedad.valor_vivienda}}</p>
+                        <p style="margin: 2px; font-size: calc(12px + 0.2vw);">{{propiedad.area}}m², {{propiedad.habitaciones}} habitaciones, {{propiedad.banos}} baños</p>
                         <br>
-                        <div>
-                            <p *ngIf="propiedad.bbp == true">Aplica BBP -</p>
-                            <p *ngIf="propiedad.periodo_gracia == true">Periodo de gracia</p>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -104,10 +101,10 @@
                 </div>
                 <h1 style="text-align: center;">Planes</h1>
                 <div class="list">
-                    <div *ngFor="let plan of planes" class="propiedad" (click)="mostrarPlan(plan.plan_id)">
-                        <img src="imagenes/propiedades/{{getVivienda(plan.propiedad_id)}}.png" style="width: 100%;">
+                    <div *ngFor="let plan of planes" class="propiedad" (click)="mostrarPlan(plan.id)">
+                        <img src="imagenes/propiedades/{{plan.nombrePropiedad}}.png" style="width: 100%;">
                         <br>
-                        <p style="margin: 2px; font-weight: bold; font-size: calc(15px + 0.3vw);">{{getVivienda(plan.propiedad_id)}}</p>
+                        <p style="margin: 2px; font-weight: bold; font-size: calc(15px + 0.3vw);">{{plan.nombrePropiedad}}_{{plan.id}}</p>
                         <br>
                     </div>
                 </div>

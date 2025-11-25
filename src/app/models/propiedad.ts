@@ -6,6 +6,9 @@ export interface Propiedad{
     valor_vivienda: number,
     moneda_id: number,
 
-    bbp: boolean,
-    periodo_gracia: boolean
+    habitaciones: number,
+    banos: number,
+    area: number,
+
+    tipo: string,
 }

@@ -26,18 +26,16 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="propiedad !== undefined" class="content">
+        <div *ngIf="propiedad !== undefined && usuario !== undefined" class="content">
             <div class="details">
                 <h1>Detalles de Vivienda</h1>
                 <br>
                 <img src="imagenes/propiedades/{{propiedad.nombre}}.png" style="width: 65%; min-width: 200px;">
                 <h1>Costo: S/{{propiedad.valor_vivienda}}</h1>
-                <h3>BPP: S/</h3>
+                <h3>BPP: S/{{getBBP(usuario, propiedad)}}</h3>
                 <h4>Detalles BPP:</h4>
-                <h5>Rango de Costo:</h5>
-                <h5>Tipo de Vivienda:</h5>
-                <h4>Plazo Disponible:</h4>
-                <h5>Rango - Meses</h5>
+                <h5>Rango de Costo: {{getRangoPrecio(propiedad.valor_vivienda)}}</h5>
+                <h5>Tipo de Vivienda: {{propiedad.tipo}}</h5>
                 <h3>Detalles de Vivienda</h3>
                 <h4>Distrito: {{propiedad.distrito}}</h4>
                 <h4>Dirección: {{propiedad.direccion}}</h4>
@@ -96,16 +94,26 @@
 
                     <div class="input-group">
                         <label for="intereses">Intereses (%)</label>
-                        <input type="number" id="intereses" formControlName="porcentajeTasa" step=".01" min="0" required>
+                        <input type="number" id="intereses" formControlName="porcentajeTasa" step=".01" min="4" required>
                     </div>
 
                     <div class="input-group">
                         <label for="cuotaInicial">Cuota Inicial (%)</label>
-                        <input type="number" id="cuotaInicial" formControlName="cuotaInicial" step=".01" min="7.50" max="25" required>
+                        <input type="number" id="cuotaInicial" formControlName="cuotaInicial" step=".01" min="7.50" max="30" required>
                     </div>
 
-                    <div *ngIf="errorMessage" class="error-message">
-                        Usuario o contraseña incorrectos. Inténtalo nuevamente.
+                    <mat-form-field appearance="fill" id="fechaInicio" class="input-group">
+                        <mat-label>Fecha de Inicio</mat-label>
+                        <br>
+                        <input matInput [matDatepicker]="picker" formControlName="fechaInicio">
+                        <mat-hint>MM/DD/YYYY</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+
+                    <div class="input-group">
+                        <label for="plazo">Plazo (En Años)</label>
+                        <input type="number" id="plazo" formControlName="plazo" step="1" min="5" max="25" required>
                     </div>
 
                     <h1 class="formSectionTitle">Gastos Iniciales</h1>
@@ -174,7 +182,7 @@
                         <input type="number" id="graciaParcial" formControlName="graciaParcial" step="1" min="0" max="6" required>
                     </div>
 
-                    <button (click)="crearPlan()" type="submit" class="login-button">Crear Plan</button>
+                    <button type="submit" class="login-button">Crear Plan</button>
                 </form>
             </div>
         </div>

@@ -38,19 +38,31 @@ export class MostrarPlanComponent {
     this.dataSource.paginator = this.paginator;
   }
 
-  cargarPlan(){
-    this.route.paramMap.subscribe(params =>{
+  cargarPlan() {
+    this.route.paramMap.subscribe(params => {
       const id = params.get('id');
-      if(id !== null){
+      if (id !== null) {
         this.planId = parseInt(id, 10);
-        const plan = this.planService.getPlanById(this.planId);
-        if(plan){
-          this.cuotas = this.planService.crearCuotas(plan);
-          this.dataSource.data = this.cuotas;
-        }
-        this.cdr.detectChanges();
+
+        this.planService.getPlanById(this.planId).subscribe({
+          next: (plan) => {
+            this.planService.crearCuotas(plan).subscribe({
+              next: (cuotas) => {
+                this.cuotas = cuotas;
+                this.dataSource.data = cuotas;
+                this.cdr.detectChanges();
+              },
+              error: (err) => {
+                console.error("Error al generar las cuotas", err);
+              }
+            });
+          },
+          error: (err) => {
+            console.error("Error al encontrar el plan", err);
+          }
+        });
       }
-    })
+    });
   }
 
   desplegarMenu(){

@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { PropiedadService } from '../../services/propiedad-service';
 import { Propiedad } from '../../models/propiedad';
 import { HomeService } from '../../services/home-service';
 import { Router } from '@angular/router';
 import { PlanService } from '../../services/plan-service';
 import { Plan } from '../../models/plan-pago';
+import { UsuarioService } from '../../services/usuario-service';
 
 @Component({
   selector: 'app-home-component',
@@ -14,16 +15,65 @@ import { Plan } from '../../models/plan-pago';
 })
 export class HomeComponent {
 
-  propiedades: Propiedad[];
-  planes: Plan[];
+  propiedades: Propiedad[] = [];
+  planes: Plan[] = [];
   menuDesplegado: boolean = true;
   vistaActual: string;
   filtroActual: string = "Precio";
 
-  constructor(private propiedadService: PropiedadService, private homeService: HomeService, private router: Router, private planService: PlanService){
-    this.propiedades = propiedadService.getPropiedades();
-    this.planes = planService.getPlanes();
+  constructor(private propiedadService: PropiedadService, private homeService: HomeService, private router: Router, private planService: PlanService, private usuarioService: UsuarioService, private cdr: ChangeDetectorRef){
     this.vistaActual = homeService.getVista();
+  }
+
+  ngOnInit(){
+    this.cargarPropiedades();
+    this.cargarPlanes();
+
+    this.cdr.detectChanges();
+  }
+
+  cargarPropiedades(){
+    this.propiedadService.getPropiedades().subscribe({
+      next: (data) => {
+        this.propiedades = data;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error("Error", err);
+      }
+    });
+  }
+
+  cargarPlanes(){
+    const usuarioId = this.usuarioService.getUsuarioId();
+    if (usuarioId) {
+      this.planService.getPlanesPorUsuario((usuarioId)).subscribe({
+        next: (planes) => {
+          this.planes = planes;
+          this.cdr.detectChanges();
+          for (let plan of this.planes) {
+            if (plan.propiedad_id) {
+              this.propiedadService.getPropiedadById(plan.propiedad_id).subscribe({
+                next: (vivienda) => {
+                  plan.nombrePropiedad = vivienda.nombre;
+                  this.cdr.detectChanges();
+                },
+                error: (err) => {
+                  console.error("Error fetching vivienda:", err);
+                  alert("q malaso");
+                }
+              });
+            }else{
+              alert("no encontre propiedad id ptmrrrrrrrrr");
+            }
+          }
+
+        },
+        error: (err) => {
+          console.error("Error", err);
+        }
+      });
+    }
   }
 
   desplegarMenu(){
@@ -48,7 +98,15 @@ export class HomeComponent {
   mostrarPlan(plan_id: number){
     this.router.navigate(['/mostrar/' + plan_id]);
   }
-  getVivienda(vivienda_id: number){
-    return this.propiedadService.getPropiedadById(vivienda_id)?.nombre;
+  getVivienda(vivienda_id: number): void {
+    this.propiedadService.getPropiedadById(vivienda_id).subscribe({
+      next: (vivienda) => {
+        const nombre = vivienda.nombre;
+
+      },
+      error: (err) => {
+        console.error("Error fetching vivienda:", err);
+      }
+    });
   }
 }

@@ -60,12 +60,8 @@
 .content{
     flex: 0.9;
 
-    padding: 15px;
-
     background-color: white;
     border-radius: 25px;
-
-    padding-right: calc(1vw + 100px);
 
     display: flex;
     flex-direction: column;
