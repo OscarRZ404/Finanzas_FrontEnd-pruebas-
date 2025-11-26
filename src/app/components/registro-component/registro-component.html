@@ -3,10 +3,12 @@
     <img src="imagenes/MiViviendaLogo.png" alt="MiVivienda Logo" />
     <p class="brand-text">Crea tu cuenta para empezar a planificar</p>
   </div>
+
   <div class="right-side">
     <div class="form-container">
       <h1>Registro</h1>
       <p class="subtitle">Completa tus datos para crear tu acceso</p>
+
       <form class="form" (submit)="registrar($event)">
         <label for="nombre">Nombre completo</label>
         <input
@@ -52,8 +54,12 @@
 
         <button class="primary" type="submit">Registrarme</button>
       </form>
+
       <p *ngIf="mensaje" class="mensaje" [ngClass]="mensajeTipo">{{ mensaje }}</p>
-      <p class="volver" (click)="irALogin()">Volver al inicio de sesión</p>
+
+      <button type="button" class="ghost volver-btn" (click)="irALogin()">
+        Volver al inicio de sesión
+      </button>
     </div>
   </div>
 </div>

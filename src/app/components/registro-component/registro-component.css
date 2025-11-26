@@ -1,9 +1,15 @@
-:root {
+:host {
   --azul-oscuro: #0f2a4a;
   --azul-oscuro-2: #132f52;
   --celeste-fondo: #dceaff;
   --celeste: rgb(114, 156, 255);
   --gris: #7b8794;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 .container {
@@ -76,6 +82,9 @@
 
 .form input,
 .form button {
+  height: 3.2rem;
+  padding: 0 1rem;
+  border-radius: 12px;
   width: 100%;
 }
 
@@ -86,8 +95,6 @@ label {
 
 input {
   border: 1px solid #cdd5df;
-  border-radius: 10px;
-  padding: 0.9rem 1rem;
   font-size: 1rem;
   outline: none;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
@@ -100,14 +107,12 @@ input:focus {
 
 button {
   border: none;
-  border-radius: 12px;
-  padding: 0.95rem;
   font-weight: 700;
   font-size: 1rem;
   cursor: pointer;
   transition: transform 0.1s ease, box-shadow 0.2s ease;
   color: var(--azul-oscuro);
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
 }
@@ -127,6 +132,28 @@ button.primary:hover {
   filter: brightness(1.05);
 }
 
+.volver-btn {
+  background: #ffffff;
+  color: var(--azul-oscuro);
+  border: 2px solid rgba(114, 156, 255, 0.35);
+  box-shadow: 0 6px 16px rgba(114, 156, 255, 0.18);
+  height: 3.2rem;
+  border-radius: 12px;
+  width: 100%;
+  font-weight: 700;
+  margin-top: 0.75rem;
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.2s ease;
+}
+
+.volver-btn:hover {
+  filter: brightness(1.03);
+}
+
+.volver-btn:active {
+  transform: translateY(1px);
+}
+
 .mensaje {
   margin-top: 1rem;
   text-align: center;
@@ -140,14 +167,6 @@ button.primary:hover {
 
 .mensaje.error {
   color: #d9534f;
-}
-
-.volver {
-  text-align: center;
-  color: var(--celeste);
-  font-weight: 700;
-  margin-top: 0.5rem;
-  cursor: pointer;
 }
 
 @media (max-width: 900px) {
