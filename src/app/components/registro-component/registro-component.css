@@ -1,0 +1,152 @@
+:root {
+  --azul-oscuro: rgb(21, 47, 71);
+  --azul-claro: rgb(234, 243, 255);
+  --celeste: rgb(114, 156, 255);
+  --gris: #7b8794;
+}
+
+.container {
+  margin: 0;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+}
+
+.container > div {
+  flex: 1;
+}
+
+.left-side {
+  background-color: var(--azul-oscuro);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+}
+
+.left-side > img {
+  width: 70%;
+  max-width: 320px;
+}
+
+.brand-text {
+  margin-top: 1rem;
+  font-size: 1.1rem;
+  opacity: 0.85;
+}
+
+.right-side {
+  background-color: var(--azul-claro);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.form-container {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  padding: 3rem;
+  width: min(520px, 100%);
+}
+
+.form-container > h1 {
+  color: var(--celeste);
+  font-weight: 800;
+  font-size: calc(28px + 0.5vw);
+  text-align: center;
+  margin-bottom: 0.25rem;
+}
+
+.subtitle {
+  text-align: center;
+  color: var(--gris);
+  margin-bottom: 2rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+label {
+  font-weight: 600;
+  color: #1f2a3d;
+}
+
+input {
+  border: 1px solid #cdd5df;
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus {
+  border-color: var(--celeste);
+  box-shadow: 0 0 0 3px rgba(114, 156, 255, 0.2);
+}
+
+button {
+  border: none;
+  border-radius: 12px;
+  padding: 0.95rem;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.2s ease;
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+button.primary {
+  background: linear-gradient(135deg, var(--celeste), #6eb5ff);
+  color: white;
+  box-shadow: 0 10px 25px rgba(114, 156, 255, 0.35);
+}
+
+.mensaje {
+  margin-top: 1rem;
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.mensaje.info {
+  color: var(--gris);
+}
+
+.mensaje.error {
+  color: #d9534f;
+}
+
+.volver {
+  text-align: center;
+  color: var(--celeste);
+  font-weight: 700;
+  margin-top: 0.5rem;
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .left-side {
+    padding: 1.5rem;
+  }
+
+  .form-container {
+    padding: 2rem;
+  }
+}
