@@ -100,6 +100,10 @@
     }
   },
   "cli": {
+<<<<<<< Updated upstream
     "analytics": false
+=======
+    "analytics": "35870a12-4625-4101-ab68-55939f79d5c7"
+>>>>>>> Stashed changes
   }
 }
