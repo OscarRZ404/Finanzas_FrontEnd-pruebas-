@@ -117,9 +117,14 @@ button:active {
 }
 
 button.primary {
-  background: linear-gradient(135deg, var(--celeste), #6eb5ff);
+  background: linear-gradient(135deg, var(--celeste), #7aa5ff);
   color: #ffffff;
-  box-shadow: 0 10px 25px rgba(114, 156, 255, 0.35);
+  border: 1px solid rgba(114, 156, 255, 0.35);
+  box-shadow: 0 10px 24px rgba(114, 156, 255, 0.35);
+}
+
+button.primary:hover {
+  filter: brightness(1.05);
 }
 
 button.ghost {
