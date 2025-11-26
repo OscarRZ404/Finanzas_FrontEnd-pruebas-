@@ -117,9 +117,10 @@ button:active {
 }
 
 button.primary {
-  background: linear-gradient(135deg, var(--celeste), #6eb5ff);
-  color: #ffffff;
-  box-shadow: 0 10px 25px rgba(114, 156, 255, 0.35);
+  background: #ffffff;
+  color: var(--azul-oscuro);
+  border: 2px solid rgba(114, 156, 255, 0.35);
+  box-shadow: 0 6px 16px rgba(114, 156, 255, 0.18);
 }
 
 .mensaje {
