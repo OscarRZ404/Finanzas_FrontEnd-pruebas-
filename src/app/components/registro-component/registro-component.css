@@ -1,6 +1,7 @@
 :root {
-  --azul-oscuro: rgb(21, 47, 71);
-  --azul-claro: rgb(234, 243, 255);
+  --azul-oscuro: #0f2a4a;
+  --azul-oscuro-2: #132f52;
+  --celeste-fondo: #dceaff;
   --celeste: rgb(114, 156, 255);
   --gris: #7b8794;
 }
@@ -18,7 +19,7 @@
 }
 
 .left-side {
-  background-color: var(--azul-oscuro);
+  background: linear-gradient(160deg, var(--azul-oscuro), var(--azul-oscuro-2));
   color: white;
   display: flex;
   flex-direction: column;
@@ -40,7 +41,7 @@
 }
 
 .right-side {
-  background-color: var(--azul-claro);
+  background-color: var(--celeste-fondo);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -73,6 +74,11 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+}
+
+.form input,
+.form button {
+  width: 100%;
 }
 
 label {
